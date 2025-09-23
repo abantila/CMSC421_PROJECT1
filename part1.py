@@ -317,7 +317,7 @@ def process_all_matrices(folder_path="mats_911", sizes_to_process=None):
     if sizes_to_process is None:
         sizes_to_process = [5, 10, 15, 20, 25, 30]
     
-    k_values = [1, 2, 3, 5, 8]
+    k_values = [1, 2, 3, 5, 8, 9]
     num_repeats_values = [1, 3, 5, 10, 20, 30]
     
     algorithms = {
@@ -461,7 +461,7 @@ def plot_rrnn_hyperparams(hyperparam_results, best_k, best_repeats):
     # k vs score
     plt.figure(figsize=(7,5))
     plt.plot(hyperparam_results['k_values'], hyperparam_results['k_scores'],
-             marker='o', markersize=8, linewidth=2, label="Median Score")
+             marker='o', markersize=10, linewidth=2, label="Median Score")
     plt.axvline(best_k, color='r', linestyle='--', linewidth=1.5, label=f'Optimal k={best_k}')
     plt.xlabel("k (nearest neighbors considered)", fontsize=12, fontweight='bold')
     plt.ylabel("Median Tour Score", fontsize=12, fontweight='bold')
@@ -490,27 +490,27 @@ def plot_comparisons(results):
     plt.plot(sizes, [r['NN_median_wall_time'] for r in results],
              marker='o', markersize=7, linewidth=2, label="NN")
     plt.plot(sizes, [r['NN_2opt_median_wall_time'] for r in results],
-             marker='s', markersize=7, linewidth=2, label="NN+2opt")
+             marker='s', markersize=7, linewidth=2, label="NN2O")
     plt.plot(sizes, [r['RRNN_median_wall_time'] for r in results],
              marker='^', markersize=7, linewidth=2, label="RRNN")
     plt.xlabel("Number of Cities", fontsize=12, fontweight='bold')
-    plt.ylabel("Median Wall Time (s)", fontsize=12, fontweight='bold')
-    plt.title("Wall Time vs Number of Cities", fontsize=14, fontweight='bold')
+    plt.ylabel("Runtime (s)", fontsize=12, fontweight='bold')
+    plt.title("Runtime Comparison Across Algorithms (NN, NN2O, RNN)", fontsize=14, fontweight='bold')
     plt.legend()
     plt.tight_layout()
-    plt.savefig("wall_time_vs_size.png", dpi=300)
+    plt.savefig("run_time_vs_size.png", dpi=300)
 
     # CPU time
     plt.figure(figsize=(7,5))
     plt.plot(sizes, [r['NN_median_cpu_time'] for r in results],
              marker='o', markersize=7, linewidth=2, label="NN")
     plt.plot(sizes, [r['NN_2opt_median_cpu_time'] for r in results],
-             marker='s', markersize=7, linewidth=2, label="NN+2opt")
+             marker='s', markersize=7, linewidth=2, label="NN2O")
     plt.plot(sizes, [r['RRNN_median_cpu_time'] for r in results],
              marker='^', markersize=7, linewidth=2, label="RRNN")
     plt.xlabel("Number of Cities", fontsize=12, fontweight='bold')
-    plt.ylabel("Median CPU Time (s)", fontsize=12, fontweight='bold')
-    plt.title("CPU Time vs Number of Cities", fontsize=14, fontweight='bold')
+    plt.ylabel("CPU Time (s)", fontsize=12, fontweight='bold')
+    plt.title("CPU Time Comparison Across Algorithms (NN, NN2O, RNN)", fontsize=14, fontweight='bold')
     plt.legend()
     plt.tight_layout()
     plt.savefig("cpu_time_vs_size.png", dpi=300)
@@ -520,18 +520,18 @@ def plot_comparisons(results):
     plt.plot(sizes, [r['NN_median_score'] for r in results],
              marker='o', markersize=7, linewidth=2, label="NN")
     plt.plot(sizes, [r['NN_2opt_median_score'] for r in results],
-             marker='s', markersize=7, linewidth=2, label="NN+2opt")
+             marker='s', markersize=7, linewidth=2, label="NN2O")
     plt.plot(sizes, [r['RRNN_median_score'] for r in results],
              marker='^', markersize=7, linewidth=2, label="RRNN")
     plt.xlabel("Number of Cities", fontsize=12, fontweight='bold')
-    plt.ylabel("Median Tour Score", fontsize=12, fontweight='bold')
-    plt.title("Tour Score vs Number of Cities", fontsize=14, fontweight='bold')
+    plt.ylabel("Score", fontsize=12, fontweight='bold')
+    plt.title("Cost Comparison Across Algorithms (NN, NN2O, RNN)", fontsize=14, fontweight='bold')
     plt.legend()
     plt.tight_layout()
     plt.savefig("scores_vs_size.png", dpi=300)
 
 # Main output section
-# Update the detailed results section to include best paths
+# Detailed results section to include best paths
 if __name__ == "__main__":
     sizes_to_process = get_sizes_from_args()
     
